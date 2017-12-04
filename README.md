@@ -4,7 +4,8 @@ Simple 2D game i've been writing for a couple weeks from scratch in C++ and SDL2
 https://www.youtube.com/watch?v=f3frKCMhPyk
 
 # Dependencies
-```libsdl2-2.0-0
+```
+libsdl2-2.0-0
 libsdl2-image-2.0-0
 libboost-dev 
 libsqlite3-dev
@@ -12,7 +13,8 @@ libsqlite3-dev
 
 # How to run
 Assuming all dependencies are installed:
-```make
+```
+make
 cd ./build && ./pumpkin
 ```
 
