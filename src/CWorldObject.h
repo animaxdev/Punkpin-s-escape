@@ -20,56 +20,56 @@ class CWorldObject
 {
 protected:
 
-	double x, y, xDest, yDest;
-   // double lastX, lastY;
-	double xVelocity, yVelocity;
-	double angle;
-    double size;
-    bool wasHit;
-	SDL_Rect collider;
-	typeObj objectType = UNDEFINED;
+double x, y, xDest, yDest;
+// double lastX, lastY;
+double xVelocity, yVelocity;
+double angle;
+double size;
+bool wasHit;
+SDL_Rect collider;
+typeObj objectType = UNDEFINED;
 
 
 public:
 
-    CWorldObject();
-    CWorldObject(int);
-    virtual ~CWorldObject() { } //std::cout << "world object destroyed!\n"; }
+CWorldObject();
+CWorldObject(int);
+virtual ~CWorldObject() { } //std::cout << "world object destroyed!\n"; }
 
-	//	basics
-	//
-	bool isDead = false;		//	tbd...
-	Uint32 spawnTime;			//	tbd...
+//  basics
+//
+bool isDead = false;        //  tbd...
+Uint32 spawnTime;           //  tbd...
 
-    // main updates
-	virtual bool update() = 0;
-    virtual void onHit() { wasHit = true; }
+// main updates
+virtual bool update() = 0;
+virtual void onHit() { wasHit = true; }
 
-	//	collision/movement interfaces
-	//
-    virtual bool setDestinationCords(const std::shared_ptr<CWorldObject> obj);
-	bool checkCollision(const std::shared_ptr<CWorldObject> obj);
-    void moveBack();
-	double calculateAngle(double, double);
+//  collision/movement interfaces
+//
+virtual bool setDestinationCords(const std::shared_ptr<CWorldObject> obj);
+bool checkCollision(const std::shared_ptr<CWorldObject> obj);
+void moveBack();
+double calculateAngle(double, double);
 
-	//	gets/returns
-	//
-    double getX() const { return x; }
-    double getY() const { return y; }
-    virtual double getAngle() const { return angle; }
-	const CWorldObject& getObject() { return *this; }
-    const SDL_Rect& getCollider() const { return collider; }
-	bool is(typeObj type) const { return objectType == type; }
-    bool isHit() const { return wasHit; }
+//  gets/returns
+//
+double getX() const { return x; }
+double getY() const { return y; }
+virtual double getAngle() const { return angle; }
+const CWorldObject& getObject() { return *this; }
+const SDL_Rect& getCollider() const { return collider; }
+bool is(typeObj type) const { return objectType == type; }
+bool isHit() const { return wasHit; }
 
-    virtual void move(double deg, double val);
+virtual void move(double deg, double val);
 
-    double getDistance(const std::shared_ptr<CWorldObject> obj);
-    //void resetTimer() { spawnTime = 0;}
+double getDistance(const std::shared_ptr<CWorldObject> obj);
+//void resetTimer() { spawnTime = 0;}
 
-    //virtual void
-    const double & getAddrX() { return x;}
-    const double & getAddrY() { return y;}
-    const double & getSize() const { return size; }
+//virtual void
+const double & getAddrX() { return x;}
+const double & getAddrY() { return y;}
+const double & getSize() const { return size; }
 
 };

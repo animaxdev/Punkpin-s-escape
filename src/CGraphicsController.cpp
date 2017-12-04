@@ -2,60 +2,60 @@
 
 std::shared_ptr<CTexture> CGraphicsController::getTextureByName(std::string textureName)
 {
-	ptrdiff_t	pos = distance(textures.second.begin(),
-		find(textures.second.begin(), textures.second.end(), textureName));
+    ptrdiff_t   pos = distance(textures.second.begin(),
+        find(textures.second.begin(), textures.second.end(), textureName));
 
-	return textures.first[pos];
+    return textures.first[pos];
 }
 
 void CGraphicsController::renderObject(const std::shared_ptr<CWorldObject> obj, const std::shared_ptr<CTexture> txtr, int angleIncluded)
 {
     txtr->render(static_cast<int>(obj->getX() - cameraPos.x),
-                static_cast<int>(obj->getY() - cameraPos.y),
-				NULL,
-                angleIncluded == -1 ? static_cast<int>(obj->getAngle()) : angleIncluded
-				);
+        static_cast<int>(obj->getY() - cameraPos.y),
+        NULL,
+        angleIncluded == -1 ? static_cast<int>(obj->getAngle()) : angleIncluded
+        );
 }
 
 CGraphicsController::CGraphicsController(std::shared_ptr<CModel> mdl)
 {
-	initialize();
-	loadMedia();
+    initialize();
+    loadMedia();
     this->model = mdl;
 
-	guiView.w = 200;
-	guiView.x = SCREEN_WIDTH - guiView.w;
-	guiView.y = 0;
+    guiView.w = 200;
+    guiView.x = SCREEN_WIDTH - guiView.w;
+    guiView.y = 0;
     guiView.h = 768;
 
-	mainView.x = 0;
-	mainView.y = 0;
-	mainView.w = SCREEN_WIDTH - guiView.w;
-	mainView.h = SCREEN_HEIGHT;
+    mainView.x = 0;
+    mainView.y = 0;
+    mainView.w = SCREEN_WIDTH - guiView.w;
+    mainView.h = SCREEN_HEIGHT;
 
-	menuView.w = 200;
-	menuView.x = mainView.w/2 - menuView.w/2;
-	menuView.y = 120;
-	menuView.h = 400;
+    menuView.w = 200;
+    menuView.x = mainView.w/2 - menuView.w/2;
+    menuView.y = 120;
+    menuView.h = 400;
 
     messageView.w = 460;
     messageView.x = mainView.w/2 - messageView.w/2;
     messageView.h = 310;
     messageView.y = SCREEN_HEIGHT/2 - messageView.h/2;
 
-	frame = 0;
+    frame = 0;
 }
 
 CGraphicsController::~CGraphicsController()
 {
-	std::cout << "graphics controller destroyed." << std::endl;
+    std::cout << "graphics controller destroyed." << std::endl;
     delete particleManager;
     delete animationManager;
 }
 
 bool CGraphicsController::renderFrame()
 {
-	SDL_RenderClear(gRenderer);
+    SDL_RenderClear(gRenderer);
 
     // Keep it in bounds
     this->cameraUpdate();
@@ -67,114 +67,114 @@ bool CGraphicsController::renderFrame()
     this->renderMenu();
 
     // Update screen
-	SDL_RenderPresent(gRenderer);
+    SDL_RenderPresent(gRenderer);
     ++frame;
-	return true;
+    return true;
 }
 
 bool CGraphicsController::initialize()
 {
-	//	Initialization flag
-	bool success = true;
+    //  Initialization flag
+    bool success = true;
 
-	//	Initialize SDL
-	if (SDL_Init( SDL_INIT_VIDEO ) < 0)
-	{
-		printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
-		success = false;
-	}
-	else
-	{
-		//	Set texture filtering to linear
-		if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
-		{
-			printf("Warning: Linear texture filtering not enabled!");
-		}
+    //  Initialize SDL
+    if (SDL_Init( SDL_INIT_VIDEO ) < 0)
+    {
+        printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
+        success = false;
+    }
+    else
+    {
+        //  Set texture filtering to linear
+        if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1"))
+        {
+            printf("Warning: Linear texture filtering not enabled!");
+        }
 
-		//	Create window
-		gWindow = SDL_CreateWindow("Punkpin's escape", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		if (gWindow == NULL)
-		{
-			printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
-			success = false;
-		}
-		else
-		{
-			//	Create vsynced renderer for window
+        //  Create window
+        gWindow = SDL_CreateWindow("Punkpin's escape", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+        if (gWindow == NULL)
+        {
+            printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
+            success = false;
+        }
+        else
+        {
+            //  Create vsynced renderer for window
             SDL_SetWindowFullscreen(gWindow, SDL_FALSE);
-			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-			
-			if (gRenderer == NULL)
-			{
-				printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
-				success = false;
-			}
-			else
-			{
-				//	Initialize renderer color
-				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+            gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+            
+            if (gRenderer == NULL)
+            {
+                printf("Renderer could not be created! SDL Error: %s\n", SDL_GetError());
+                success = false;
+            }
+            else
+            {
+                //  Initialize renderer color
+                SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
-				//	Initialize PNG loading
-				int imgFlags = IMG_INIT_PNG;
-				if (!(IMG_Init(imgFlags) & imgFlags))
-				{
-					printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
-					success = false;
-				}
+                //  Initialize PNG loading
+                int imgFlags = IMG_INIT_PNG;
+                if (!(IMG_Init(imgFlags) & imgFlags))
+                {
+                    printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+                    success = false;
+                }
 
-				//	Initialize SDL_ttf
-				if (TTF_Init() == -1)
-				{
-					printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
-					success = false;
-				}
-			}
-		}
-	}
+                //  Initialize SDL_ttf
+                if (TTF_Init() == -1)
+                {
+                    printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
+                    success = false;
+                }
+            }
+        }
+    }
     SDL_SetRelativeMouseMode(SDL_TRUE);
-	SDL_SetRenderDrawColor(gRenderer, 0x7f, 0x7f, 0x7f, 0x00);
+    SDL_SetRenderDrawColor(gRenderer, 0x7f, 0x7f, 0x7f, 0x00);
     SDL_SetRenderDrawBlendMode(gRenderer, SDL_BLENDMODE_BLEND);
 
-	return success;
+    return success;
 }
 
 bool CGraphicsController::renderMap()
 {
-	for (auto &i : model->getMapObject()->getMapTiles())
-	{
-		for (auto &j : i)
-		{
-			switch (j->getTileType())
-			{
-			case GROUND: 
+    for (auto &i : model->getMapObject()->getMapTiles())
+    {
+        for (auto &j : i)
+        {
+            switch (j->getTileType())
+            {
+                case GROUND: 
                 ground->render(j->getX() - cameraPos.x, j->getY() - cameraPos.y);
-				break;
-			case WALL:	
+                break;
+                case WALL:  
                 wall->render(j->getX() - cameraPos.x, j->getY() - cameraPos.y);
-				break;
-			case DOOR:
+                break;
+                case DOOR:
                 door->render(j->getX() - cameraPos.x, j->getY() - cameraPos.y);
-				break;
-			}
+                break;
+            }
 
             if(j->isHit())
             {
                 particleManager->addParticleSet(typesWall,
-                                                j->getAddrX(),
-                                                j->getAddrY(),4,40
-                                                );
+                    j->getAddrX(),
+                    j->getAddrY(),4,40
+                    );
             }
-		}
-	}
-	return true;
+        }
+    }
+    return true;
 }
 
 bool CGraphicsController::renderWorldObjects()
 {
-	for (auto &i : model->getWorldObjects())
-	{
+    for (auto &i : model->getWorldObjects())
+    {
         if ( i->is(ENEMY) )
-		{
+        {
             auto enemy = std::dynamic_pointer_cast<CEnemy>(i);
             auto x = enemy->getX() - cameraPos.x;
             auto y = enemy->getY() - cameraPos.y - 10;
@@ -188,17 +188,17 @@ bool CGraphicsController::renderWorldObjects()
             if(enemy->getName() == "ghost" && model->getFrameNr() % 3  == 0)
             {
                 particleManager->addParticleSet(typesGhost,
-                                                (int)i->getX(),
-                                                (int)i->getY(),4,10
-                                                );
+                    (int)i->getX(),
+                    (int)i->getY(),4,10
+                    );
             }
 
             if(i->isHit())
             {
                 particleManager->addParticleSet(types,
-                                                enemy->getAddrX(),
-                                                enemy->getAddrY(),8
-                                                );
+                    enemy->getAddrX(),
+                    enemy->getAddrY(),8
+                    );
 
                 if(i->isDead == true)
                 {
@@ -247,11 +247,11 @@ bool CGraphicsController::renderWorldObjects()
             else
                 renderObject(i, getTextureByName(name), enemy->getAngleToRender());
 
-		}
+        }
         else if ( i->is(BULLET) )
-		{
-			renderObject(i, getTextureByName("bullet"));
-		}
+        {
+            renderObject(i, getTextureByName("bullet"));
+        }
         else if( i->is(ENEMY_BULLET) )
         {
             renderObject(i, animationManager->getCurrent("fireball"));
@@ -267,8 +267,8 @@ bool CGraphicsController::renderWorldObjects()
             else
                 renderObject(i, getTextureByName(name));
         }
-	}
-	return true;
+    }
+    return true;
 }
 
 bool CGraphicsController::cameraUpdate()
@@ -276,69 +276,69 @@ bool CGraphicsController::cameraUpdate()
     cameraPos.x = model->getPlayerObject()->getX() - SCREEN_WIDTH / 2;
     cameraPos.y = model->getPlayerObject()->getY() - SCREEN_HEIGHT / 2;
 
-	//	Keep cameraPos in bounds
-	if (cameraPos.x < 0)
-	{
-		cameraPos.x = 0;
-	}
-	if (cameraPos.y < 0)
-	{
-		cameraPos.y = 0;
-	}
-	if (cameraPos.x > LEVEL_WIDTH - mainView.w)
-	{
-		cameraPos.x = LEVEL_WIDTH - mainView.w;
-	}
+    //  Keep cameraPos in bounds
+    if (cameraPos.x < 0)
+    {
+        cameraPos.x = 0;
+    }
+    if (cameraPos.y < 0)
+    {
+        cameraPos.y = 0;
+    }
+    if (cameraPos.x > LEVEL_WIDTH - mainView.w)
+    {
+        cameraPos.x = LEVEL_WIDTH - mainView.w;
+    }
     if (cameraPos.y > LEVEL_HEIGHT - mainView.h)
-	{
+    {
         cameraPos.y = LEVEL_HEIGHT - mainView.h;
-	}
+    }
 
-	return true;
+    return true;
 }
 
 bool CGraphicsController::loadMedia()
 {
-	bool success = true;
+    bool success = true;
 
-	//	Open the font
+    //  Open the font
     gFont = TTF_OpenFont("data/font.ttf", 22);
 
-	if (gFont == NULL)
-	{
-		printf("Failed to load font:: %s\n", TTF_GetError());
-		success = false;
-	}
+    if (gFont == NULL)
+    {
+        printf("Failed to load font:: %s\n", TTF_GetError());
+        success = false;
+    }
 
-	//	Add all files from /img folder to a vector.
-	//	Final format of a pair is <CTexture, std::string>
-	//	
-	for (auto &i : CTools::getInstance().readFilenames("img"))
-	{
-		std::string temp = i.path().string();			// format: "img/filename.png"
+    //  Add all files from /img folder to a vector.
+    //  Final format of a pair is <CTexture, std::string>
+    //  
+    for (auto &i : CTools::getInstance().readFilenames("img"))
+    {
+        std::string temp = i.path().string();           // format: "img/filename.png"
 
-        //	Add texture to a vector
-		textures.first.push_back(std::make_shared<CTexture>(gRenderer, temp));
+        //  Add texture to a vector
+        textures.first.push_back(std::make_shared<CTexture>(gRenderer, temp));
 
-		//	Add filtered filename to a vector (as a string)
-		temp = temp.substr(4, temp.length() - 4);		// -> format: "filename.png"
-		temp = temp.substr(0, temp.length() - 4);		// -> format: "filename"
-		textures.second.push_back(temp);				//	add string to a vector
-	}
+        //  Add filtered filename to a vector (as a string)
+        temp = temp.substr(4, temp.length() - 4);       // -> format: "filename.png"
+        temp = temp.substr(0, temp.length() - 4);       // -> format: "filename"
+        textures.second.push_back(temp);                //  add string to a vector
+    }
 
-	ground = getTextureByName("ground");
-	wall = getTextureByName("wall");
-	door = getTextureByName("door");
+    ground = getTextureByName("ground");
+    wall = getTextureByName("wall");
+    door = getTextureByName("door");
 
     types = {{new CTexture(gRenderer, "img//particles//1.png" ),
-             new CTexture(gRenderer, "img//particles//2.png" ),
-             new CTexture(gRenderer, "img//particles//3.png" )}};
+    new CTexture(gRenderer, "img//particles//2.png" ),
+    new CTexture(gRenderer, "img//particles//3.png" )}};
 
     typesWall = {{new CTexture(gRenderer, "img//particles//wall1.png" ),
-             new CTexture(gRenderer, "img//particles//wall2.png" )}};
+    new CTexture(gRenderer, "img//particles//wall2.png" )}};
 
     typesGhost =  {{new CTexture(gRenderer, "img//particles//ghost1.png" ),
-                    new CTexture(gRenderer, "img//particles//ghost2.png" )}};
+    new CTexture(gRenderer, "img//particles//ghost2.png" )}};
 
 
     particleManager = new CParticleManager();
@@ -355,7 +355,7 @@ bool CGraphicsController::loadMedia()
     addAnimation("tombstone", 1 , 8000);
     addAnimation("point", 4 , 150);
 
-	return success;
+    return success;
 }
 
 void CGraphicsController::renderBar(int x, int y, int w, int h, float Percent, SDL_Color FGColor, SDL_Color BGColor)
@@ -422,17 +422,17 @@ void CGraphicsController::renderMain()
         ran = rand() % playerMessages.size();
 
         particleManager->addParticleSet(types,
-                                        player->getAddrX(),
-                                        player->getAddrY()
-                                        );
+            player->getAddrX(),
+            player->getAddrY()
+            );
         alpha = 100;
     }
 
     if(t != frame && t != 0)
     {
         renderText(player->getX() - cameraPos.x-PTEXT_POS,
-                   player->getY() - cameraPos.y-PTEXT_POS,
-                   playerMessages[ran], {0x66,0xff,0x00,255-(frame-t)});
+         player->getY() - cameraPos.y-PTEXT_POS,
+         playerMessages[ran], {0x66,0xff,0x00,255-(frame-t)});
     }
     else
         t = 0;
@@ -443,7 +443,7 @@ void CGraphicsController::renderMain()
     SDL_GetMouseState(&mouseX, &mouseY);
     getTextureByName("crosshair")->render(mouseX,mouseY);
 
-	particleManager->showParticles(cameraPos);
+    particleManager->showParticles(cameraPos);
 
     if(alpha > 0)
     {
@@ -470,11 +470,11 @@ void CGraphicsController::renderGui()
         renderText(20, 190, weapon->getWeaponName());
 
         renderBar(20, 220, 100, 20, weapon->getReloadProgress(),
-                                    {0xff,0xff,0,0xff},
-                                    {50,50,50,0x55});
+            {0xff,0xff,0,0xff},
+            {50,50,50,0x55});
 
         renderText(130, 220, std::to_string(weapon->getBulletCount()) +
-                                      " of " + std::to_string(weapon->getBulletCountMax()));
+          " of " + std::to_string(weapon->getBulletCountMax()));
 
         renderText(20, 250, "dmg: " + std::to_string(weapon->getWeaponDamage()));
     }

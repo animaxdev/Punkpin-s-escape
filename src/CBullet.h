@@ -26,8 +26,6 @@ public:
 
     ~CBullet();
 
-	bool update() override;
+    bool update() override;
     const bullet_data & getBulletData() const { return bulletData; }
 };
-
-

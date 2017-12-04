@@ -28,10 +28,10 @@ class CGraphicsController final //: std::enable_shared_from_this<CGraphicsContro
 {
 private:
 
-	//	Custom type containing CTexture pointers and
-	//	coresponding strings (filenames) for further use
-	typedef std::vector<std::shared_ptr<CTexture>> texture;
-	std::pair<texture, std::vector<std::string>> textures;
+    //  Custom type containing CTexture pointers and
+    //  coresponding strings (filenames) for further use
+    typedef std::vector<std::shared_ptr<CTexture>> texture;
+    std::pair<texture, std::vector<std::string>> textures;
 
     SDL_Window* gWindow = NULL;
     SDL_Renderer* gRenderer = NULL;
@@ -41,10 +41,10 @@ private:
     CAnimationManager *animationManager;
 
     // media loader
-	bool loadMedia();
+    bool loadMedia();
 
     // initializing SDL
-	bool initialize();
+    bool initialize();
 
     // main renderers
     void renderMain();
@@ -60,8 +60,8 @@ private:
     bool renderMap();
     bool renderWorldObjects();
     void renderObject(const std::shared_ptr<CWorldObject> obj,
-                        const std::shared_ptr<CTexture> txtr,
-                        int angleIncluded = -1);
+        const std::shared_ptr<CTexture> txtr,
+        int angleIncluded = -1);
 
     // views
     SDL_Rect mainView;      //  wrap or place somewhere
@@ -70,11 +70,11 @@ private:
     SDL_Rect messageView;
 
     // most used textures
-    std::shared_ptr<CTexture> ground;		//	wrap or place somewhere
-    std::shared_ptr<CTexture> wall;			//	TODO
-    std::shared_ptr<CTexture> door;			//
-    std::shared_ptr<CTexture> levelNum;		//
-    std::shared_ptr<CTexture> timeElapsed;	//
+    std::shared_ptr<CTexture> ground;       //  wrap or place somewhere
+    std::shared_ptr<CTexture> wall;         //  TODO
+    std::shared_ptr<CTexture> door;         //
+    std::shared_ptr<CTexture> levelNum;     //
+    std::shared_ptr<CTexture> timeElapsed;  //
     std::vector<CTexture*> types;
     std::vector<CTexture*> typesWall;
     std::vector<CTexture*> typesGhost;
@@ -90,11 +90,11 @@ private:
 
 public:
 
-	CGraphicsController(std::shared_ptr<CModel>);
-	CGraphicsController() = default;
-	~CGraphicsController();
+    CGraphicsController(std::shared_ptr<CModel>);
+    CGraphicsController() = default;
+    ~CGraphicsController();
     CGraphicsController * getGraphicsController() { return this; }
-	bool renderFrame();
+    bool renderFrame();
     void toggleMenu() { _renderMenu = !_renderMenu; }
     const cameraPosition getCameraPos() const { return cameraPos; }
 };

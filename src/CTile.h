@@ -9,20 +9,20 @@ class CTile : public CWorldObject
 
 private:
 
-	bool passable;
-	typeOfTile tileType;
+    bool passable;
+    typeOfTile tileType;
 
 
 public:
 
-	CTile(int a, int b, typeOfTile what);
-	~CTile() { } //std::cout << "Tile destroyed!\n";
+    CTile(int a, int b, typeOfTile what);
+    ~CTile() { } //std::cout << "Tile destroyed!\n";
 
     bool update() override;
     void onHit() override;
 
-	void setTileType(typeOfTile what) { this->tileType = what; }
-	typeOfTile getTileType() const { return tileType; }
+    void setTileType(typeOfTile what) { this->tileType = what; }
+    typeOfTile getTileType() const { return tileType; }
 
-	static const int tileSize = 64;
+    static const int tileSize = 64;
 };

@@ -8,7 +8,6 @@
 #include "SDestinationManager.h"
 
 
-
 //////////////////////////////////////////
 //////////////////////////////////////////
 
@@ -17,15 +16,9 @@ class CEnemy final : public CWorldObject
 private:
 
     static const int sightArea = 200;
-//    bool _canShoot;
-//    bool aggro;
-//    bool canAggro;
-//	double velocity;
-      int healthPoints;
-//    int maxHp;
-//    int _ID;
-//    std::string name;
-	std::unique_ptr<destinationManager> dstMngr;
+
+    int healthPoints;
+    std::unique_ptr<destinationManager> dstMngr;
     CWeapon * weapon;
     void setAggro();
 
@@ -40,7 +33,7 @@ public:
 
     ~CEnemy();
 
-	bool update() override;
+    bool update() override;
     void onHit();
     void onHit(std::shared_ptr<CBullet>);
     void handleDistance(double distance);

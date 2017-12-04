@@ -14,15 +14,15 @@ CBullet::CBullet(double xPos, double yPos)
 CBullet::CBullet(double xPos, double yPos, double degreesAngle) : CBullet(xPos, yPos)
 {
     angle = degreesAngle;
-	objectType = BULLET;
+    objectType = BULLET;
 }
 
 CBullet::CBullet(double xPos, double yPos, double xDst, double yDst) : CBullet(xPos, yPos)
 {
-	xDest = xDst; 
-	yDest = yDst;
-	angle = calculateAngle(xDest, yDest);
-	objectType = ENEMY_BULLET;
+    xDest = xDst; 
+    yDest = yDst;
+    angle = calculateAngle(xDest, yDest);
+    objectType = ENEMY_BULLET;
 }
 
 CBullet::CBullet(double xPos, double yPos,
@@ -53,5 +53,5 @@ bool CBullet::update()
         (y + TEXTURE_SIZE < 0) || (y > LEVEL_HEIGHT) )
             isDead = true;
 
-	return true;
+    return true;
 }

@@ -32,7 +32,7 @@
 
 
 
-//	Vector of shared pointers to CWorldObject
+//  Vector of shared pointers to CWorldObject
 typedef std::vector<std::shared_ptr<CWorldObject>> world_objects;
 
 
@@ -49,24 +49,24 @@ private:
     long frameNr;
 
     bool _isPaused;
-	bool cleanUp();
-	bool killAll();
-	bool update();
+    bool cleanUp();
+    bool killAll();
+    bool update();
 
 
 public:
 
     CModel();
-	~CModel();
+    ~CModel();
 
-	void status();
-	bool worldUpdate();
-	bool addBullet(typeObj, int x = 0, int y = 0);
-	
-	const world_objects getWorldObjects() const { return worldObject; }
-	std::shared_ptr<CPlayer> getPlayerObject() const {	return playerObject;	}
-	std::shared_ptr<CMap> getMapObject() const { return mapObject; }
-	std::shared_ptr<CModel> getModel() { return shared_from_this(); }
+    void status();
+    bool worldUpdate();
+    bool addBullet(typeObj, int x = 0, int y = 0);
+    
+    const world_objects getWorldObjects() const { return worldObject; }
+    std::shared_ptr<CPlayer> getPlayerObject() const {  return playerObject;    }
+    std::shared_ptr<CMap> getMapObject() const { return mapObject; }
+    std::shared_ptr<CModel> getModel() { return shared_from_this(); }
     const std::string getCurrentMessage() { return currentMessage; }
     int getLevelNr() const { return levelNr; }
     long getFrameNr() const { return frameNr; }

@@ -28,14 +28,14 @@ CEnemy::~CEnemy()
 
 bool CEnemy::update()
 {
-	// if has planned route, move as planned
-	//
-	if ( hasPlannedRoute() )
-	{
+    // if has planned route, move as planned
+    //
+    if ( hasPlannedRoute() )
+    {
         auto dir =  dstMngr->move({ x,y }, this->data.velocity);
         xDest = dir.first;
         yDest = dir.second;
-	}
+    }
 
     this->angle = calculateAngle(xDest, yDest);
 
@@ -50,16 +50,16 @@ bool CEnemy::update()
 
     wasHit = false;
 
-	return true;
+    return true;
 }
 
 void CEnemy::onHit()
 {
-	//	If hp == 0 kill object
-	if (!(--healthPoints))	
-		isDead = true;
+    //  If hp == 0 kill object
+    if (!(--healthPoints))  
+        isDead = true;
 
-	//	Make entity aggresive if it's been hit
+    //  Make entity aggresive if it's been hit
     setAggro();
 }
 
@@ -90,11 +90,11 @@ void CEnemy::onHit(std::shared_ptr<CBullet> bullet)
 
     this->healthPoints -= bullet->getBulletData().damage;
 
-    //	If hp == 0 kill object
+    //  If hp == 0 kill object
     if (!(this->healthPoints))
         this->isDead = true;
 
-    //	Make entity aggresive if it's been hit
+    //  Make entity aggresive if it's been hit
     wasHit = true;
     setAggro();
 

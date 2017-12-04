@@ -10,6 +10,5 @@ int main(int argc, char* argv[])
 {
     std::thread mainThread(init);
     mainThread.join();
-    //CGame::getInstance().Start();
-	return 0;
+    return 0;
 }

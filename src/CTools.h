@@ -23,30 +23,30 @@ using namespace boost::filesystem;
 class CTools
 {
 private:
-	CTools() = default;
-	~CTools() {}
-	int levelNr;
+    CTools() = default;
+    ~CTools() {}
+    int levelNr;
     std::vector<enemyIdData> idData;
     std::vector<weaponIdData> weapon_idData;
     int getLastEventId();
 
 public:
 
-	static CTools & getInstance()
-	{
-		static CTools * instance = new CTools();
-		return *instance;
-	}
+    static CTools & getInstance()
+    {
+        static CTools * instance = new CTools();
+        return *instance;
+    }
 
-	//	Those funcs surely need some clarity...
-	//	...and they will get it sometime
-	//
-	std::vector<directory_entry> readFilenames(std::string dir);
-	std::vector<std::vector<char>> readMap(std::string file);
+    //  Those funcs surely need some clarity...
+    //  ...and they will get it sometime
+    //
+    std::vector<directory_entry> readFilenames(std::string dir);
+    std::vector<std::vector<char>> readMap(std::string file);
 
     // writers actual map to .map file
     void writeMapData(
-		const std::vector< std::vector< std::shared_ptr< CTile >>> &tiles);
+        const std::vector< std::vector< std::shared_ptr< CTile >>> &tiles);
 
     // reads events data for current level
     std::vector<event_data> getEventsData(unsigned levelNr);

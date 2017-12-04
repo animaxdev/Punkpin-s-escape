@@ -8,24 +8,24 @@
 class CEventController final
 {
 private:
-	SDL_Event event;
+    SDL_Event event;
 
-	bool _running;
-	std::shared_ptr<CModel> model;
-	CGraphicsController* graphicsController;
-	int mouseX, mouseY;
+    bool _running;
+    std::shared_ptr<CModel> model;
+    CGraphicsController* graphicsController;
+    int mouseX, mouseY;
 
-	//	helpers
-	bool handleKeyboard();
-	bool handleMouse();
+    //  helpers
+    bool handleKeyboard();
+    bool handleMouse();
 
 
 public:
-	CEventController( std::shared_ptr<CModel>, CGraphicsController & );
-	~CEventController();
+    CEventController( std::shared_ptr<CModel>, CGraphicsController & );
+    ~CEventController();
 
-	//	main input controller function
-	bool handleInput();
+    //  main input controller function
+    bool handleInput();
     bool getRunning() const { return _running; }
 
 };

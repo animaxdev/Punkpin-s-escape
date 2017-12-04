@@ -2,91 +2,91 @@
 
 std::vector<directory_entry> CTools::readFilenames(std::string dir)
 {
-	path p(dir);
-	std::vector<directory_entry> v;
+    path p(dir);
+    std::vector<directory_entry> v;
 
-	try
-	{
-		if (exists(p))    // does p actually exist?
-		{
-			if (is_regular_file(p))        // is p a regular file?   
-				std::cout << p << " size is " << file_size(p) << '\n';
+    try
+    {
+        if (exists(p))    // does p actually exist?
+        {
+            if (is_regular_file(p))        // is p a regular file?   
+                std::cout << p << " size is " << file_size(p) << '\n';
 
-			else if (is_directory(p))      // is p a directory?
-			{
-				std::cout << p << " is a directory containing:\n";
-				std::copy(directory_iterator(p), directory_iterator(), back_inserter(v));
+            else if (is_directory(p))      // is p a directory?
+            {
+                std::cout << p << " is a directory containing:\n";
+                std::copy(directory_iterator(p), directory_iterator(), back_inserter(v));
 
-				for (auto &i : v)
-					std::cout << i.path().string() << std::endl;
-			}
-			else
-				std::cout << p << " exists, but is neither a regular file nor a directory\n";
-		}
-		else
-			std::cout << p << " does not exist\n";
-	}
+                for (auto &i : v)
+                    std::cout << i.path().string() << std::endl;
+            }
+            else
+                std::cout << p << " exists, but is neither a regular file nor a directory\n";
+        }
+        else
+            std::cout << p << " does not exist\n";
+    }
 
-	catch (const filesystem_error& ex)
-	{
-		std::cout << ex.what() << '\n';
-	}
-	return v;
+    catch (const filesystem_error& ex)
+    {
+        std::cout << ex.what() << '\n';
+    }
+    return v;
 }
 
 std::vector<std::vector<char>> CTools::readMap(std::string file)
 {
-	std::vector<std::vector<char>> map;
+    std::vector<std::vector<char>> map;
 
-	char temp = NULL;
-	int numberOfLines = 0;
-	std::ifstream fin;
-	fin.open(file, std::ios::in);
-	map.resize(1);
+    char temp = NULL;
+    int numberOfLines = 0;
+    std::ifstream fin;
+    fin.open(file, std::ios::in);
+    map.resize(1);
 
-	while (!fin.eof()) {
+    while (!fin.eof()) {
 
-		fin.get(temp);
-		if (temp == '\n')
-		{
-			++numberOfLines; 
-			map.resize(numberOfLines+1);
-		}
-		else
-		{
-			map[numberOfLines].push_back(temp);
-		}
-	}
+        fin.get(temp);
+        if (temp == '\n')
+        {
+            ++numberOfLines; 
+            map.resize(numberOfLines+1);
+        }
+        else
+        {
+            map[numberOfLines].push_back(temp);
+        }
+    }
 
-	return map;
+    return map;
 }
 
 void CTools::writeMapData(const std::vector<std::vector<std::shared_ptr<CTile>>> & tiles)
 {
-	std::ofstream file;
-	
-	file.open("data/map/map_"+std::to_string(levelNr)+".map");
+    std::ofstream file;
+    
+    file.open("data/map/map_"+std::to_string(levelNr)+".map");
 
-	for (int i = 0; i < tiles[0].size(); i++)
-	{
-		for (int j = 0; j < tiles.size(); j++)
-		{
-			switch (tiles[j][i]->getTileType())
-			{
-			case GROUND:
-				file << 'g'; break;
-			case WALL:
-				file << 'w'; break;
-			case DOOR:
-				file << 'd'; break;
-			}
-		}
+    for (int i = 0; i < tiles[0].size(); i++)
+    {
+        for (int j = 0; j < tiles.size(); j++)
+        {
+            switch (tiles[j][i]->getTileType())
+            {
+            case GROUND:
+                file << 'g'; break;
+            case WALL:
+                file << 'w'; break;
+            case DOOR:
+                file << 'd'; break;
+            }
+        }
 
-		if (i < tiles[0].size() - 1)
-			file << '\n';
-	}
+        if (i < tiles[0].size() - 1)
+            file << '\n';
+    }
 
-	file.close();
+    file.close();
 }
 
 std::vector<event_data> CTools::getEventsData(unsigned levelNr)
@@ -176,7 +176,7 @@ void CTools::enableLevelEditor_(const Uint8 * currentKeyStates, int mouseX, int 
     int currX = (mouseX - (mouseX % CTile::tileSize)) / CTile::tileSize;
     int currY = (mouseY - (mouseY % CTile::tileSize)) / CTile::tileSize;
 
-    if (currentKeyStates[SDL_SCANCODE_G])			// write pos to spawn enemy
+    if (currentKeyStates[SDL_SCANCODE_G])           // write pos to spawn enemy
     {
         if(mode)
         {
@@ -196,7 +196,7 @@ void CTools::enableLevelEditor_(const Uint8 * currentKeyStates, int mouseX, int 
 
 
     }
-    if (currentKeyStates[SDL_SCANCODE_H])			// push position set
+    if (currentKeyStates[SDL_SCANCODE_H])           // push position set
     {
         //eventId = getLastEventId();
 
@@ -222,33 +222,33 @@ void CTools::enableLevelEditor_(const Uint8 * currentKeyStates, int mouseX, int 
         itemPosY.clear();
 
     }
-    if (currentKeyStates[SDL_SCANCODE_J])			// clear position buffer
+    if (currentKeyStates[SDL_SCANCODE_J])           // clear position buffer
     {
         strs_x.clear();
         strs_y.clear();
     }
-    if (currentKeyStates[SDL_SCANCODE_Q])			// add wall at cursor's pos
+    if (currentKeyStates[SDL_SCANCODE_Q])           // add wall at cursor's pos
     {
         tiles[currX][currY]->setTileType(WALL);
     }
-    if (currentKeyStates[SDL_SCANCODE_E])			// add ground at cursor's pos
+    if (currentKeyStates[SDL_SCANCODE_E])           // add ground at cursor's pos
     {
         tiles[currX][currY]->setTileType(GROUND);
     }
-    if (currentKeyStates[SDL_SCANCODE_Z])			// add door at cursor's pos
+    if (currentKeyStates[SDL_SCANCODE_Z])           // add door at cursor's pos
     {
         tiles[currX][currY]->setTileType(DOOR);
     }
-    if (currentKeyStates[SDL_SCANCODE_M])			// write map
+    if (currentKeyStates[SDL_SCANCODE_M])           // write map
     {
         this->writeMapData(tiles);
     }
-    if (currentKeyStates[SDL_SCANCODE_1])			// set ID, default = 0;
+    if (currentKeyStates[SDL_SCANCODE_1])           // set ID, default = 0;
     {
         std::cout << "\nEnter objectId:\n";
         std::cin >> objectId;
     }
-    if (currentKeyStates[SDL_SCANCODE_2])			// set event
+    if (currentKeyStates[SDL_SCANCODE_2])           // set event
     {
         eventX = mouseX;
         eventY = mouseY;
@@ -261,12 +261,12 @@ void CTools::enableLevelEditor_(const Uint8 * currentKeyStates, int mouseX, int 
             eventY = 0;
         }
     }
-    if (currentKeyStates[SDL_SCANCODE_3])			// enter message
+    if (currentKeyStates[SDL_SCANCODE_3])           // enter message
     {
         std::cout << "\nEnter event message:\n";
         std::getline(std::cin, message);
     }
-    if (currentKeyStates[SDL_SCANCODE_4])			// change mode
+    if (currentKeyStates[SDL_SCANCODE_4])           // change mode
     {
         mode = !mode;
     }

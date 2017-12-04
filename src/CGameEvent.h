@@ -27,9 +27,9 @@ public:
     CGameEvent(position, const int, std::vector<enemyData>,
                std::vector<itemData>, std::string);
 
-	~CGameEvent() { } // for debugging: { std::cout << "EVENT DESTROYED\n"; }
+    ~CGameEvent() { } // for debugging: { std::cout << "EVENT DESTROYED\n"; }
 
-	bool update() { return true; } //todo
+    bool update() { return true; } //todo
 
     std::vector<enemyData> & getEnemyData() { return enemy_data; }
     std::vector<itemData> & getItemData() { return item_data; }
