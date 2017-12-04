@@ -15,7 +15,7 @@ libsqlite3-dev
 Assuming all dependencies are installed:
 ```
 make
-cd ./build && ./pumpkin
+cd ./build && ./punpkin
 ```
 
 # Todo list
