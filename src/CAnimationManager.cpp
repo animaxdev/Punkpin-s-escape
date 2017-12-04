@@ -7,7 +7,6 @@ CAnimationManager::CAnimationManager() {
 
 CAnimationManager::~CAnimationManager() { }
 
-
 void CAnimationManager::setCurrent(animationData & dat)
 {
     if(currentTime > (dat.time+dat.incrTime))
@@ -41,40 +40,17 @@ const std::shared_ptr<CTexture> CAnimationManager::getCurrent(std::string name)
             return i.textures[i.currentFrame];
         }
     }
-
-//    auto size = data.end();
-//    for(auto i = data.begin(); i != size; ++i)
-//    {
-//        if(i->name == name) {
-//            setCurrent(*i);
-
-//            if(isAlive(i) == false) {
-//                data.erase(i);
-//                --i;
-//            }
-//            return i->textures[i->currentFrame];
-//        }
-//    }
     return nullptr;
 }
 
 void CAnimationManager::addStaticAnimation(std::string name, position pos, Uint32 animTime)
 {
-    //Uint32 t = currentTime;
     staticAnimation tempStaticAnimationData = {name,pos,animTime,currentTime};
     this->staticAnimationsData.push_back(tempStaticAnimationData);
 }
 
 void CAnimationManager::showStaticAnimations(cameraPosition cam)
 {
-//    for(auto &i : staticAnimationsData)
-//    {
-//        if(isAlive(i))
-//        {
-//            getCurrent(i.name)->render(i.pos.first - cam.x, i.pos.second - cam.y);
-//            i.time = this->currentTime;
-//        }
-//    }
         auto size = staticAnimationsData.size();
         for(decltype(size) i = 0; i < size; ++i)
         {

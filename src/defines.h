@@ -28,7 +28,7 @@
 #define NEWLINE_SIZE        25
 #define PTEXT_POS           50
 
-#define EDITOR_ENABLED      1
+#define EDITOR_ENABLED      0
 #define HP_BAR_TRESHOLD     100
 #define SCORE_POINT         5
 #define COLLISION_DISTANCE  36

@@ -63,7 +63,7 @@ bool CEventController::handleKeyboard()
             model->getPlayerObject()->switchWeapon();
         }
 
-        if(EDITOR_ENABLED)
+        if(EDITOR_ENABLED == 1)
         {
             CTools::getInstance().enableLevelEditor_(
                         currentKeyStates,

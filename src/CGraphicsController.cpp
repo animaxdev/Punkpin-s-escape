@@ -131,7 +131,7 @@ bool CGraphicsController::initialize()
 			}
 		}
 	}
-//    SDL_SetRelativeMouseMode(SDL_TRUE);
+    SDL_SetRelativeMouseMode(SDL_TRUE);
 	SDL_SetRenderDrawColor(gRenderer, 0x7f, 0x7f, 0x7f, 0x00);
     SDL_SetRenderDrawBlendMode(gRenderer, SDL_BLENDMODE_BLEND);
 

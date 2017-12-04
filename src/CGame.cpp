@@ -38,13 +38,9 @@ bool CGame::Frame()
 	}
 
     // reports some data to console every 30 frames
-//    if(gameModel->getFrameNr() % 30 == 0)
-//        gameModel->status();
+   if(gameModel->getFrameNr() % 30 == 0)
+       gameModel->status();
 
-
-
-    //CTimer::getInstance().tick();
-    //frameNr++;
 	return true;
 }
 
