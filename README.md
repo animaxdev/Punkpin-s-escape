@@ -7,12 +7,14 @@ https://www.youtube.com/watch?v=f3frKCMhPyk
 ```libsdl2-2.0-0
 libsdl2-image-2.0-0
 libboost-dev 
-libsqlite3-dev```
+libsqlite3-dev
+```
 
 # How to run
 Assuming all dependencies are installed:
 ```make
-cd ./build && ./pumpkin```
+cd ./build && ./pumpkin
+```
 
 # Todo list
 - improvement of collision detection
